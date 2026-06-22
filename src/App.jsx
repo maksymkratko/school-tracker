@@ -1,8 +1,8 @@
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
-import Login from "./pages/Login";
-import Dashboard from "./pages/Dashboard";
-import ClassPage from "./pages/ClassPage";
-import { useAuth } from "./context/AuthContext";
+import Login from "./pages/Login.jsx";
+import Dashboard from "./pages/Dashboard.jsx";
+import ClassPage from "./pages/ClassPage.jsx";
+import { useAuth } from "./context/AuthContext.jsx";
 
 function Protected({ children }) {
   const { user } = useAuth();
