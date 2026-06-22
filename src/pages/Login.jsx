@@ -1,19 +1,28 @@
 import { useState } from "react";
 import { supabase } from "../lib/supabase";
+import { useNavigate } from "react-router-dom";
 
 export default function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
+  const navigate = useNavigate();
+
   const signUp = async () => {
-    await supabase.auth.signUp({
-  email,
-  password,
-  options: {
-    emailRedirectTo: window.location.origin
-  }
-});
-    alert("Check your email to confirm!");
+    const { error } = await supabase.auth.signUp({
+      email,
+      password,
+      options: {
+        emailRedirectTo: window.location.origin,
+      },
+    });
+
+    if (error) {
+      alert(error.message);
+      return;
+    }
+
+    alert("Account created! You can now log in.");
   };
 
   const signIn = async () => {
@@ -21,7 +30,14 @@ export default function Login() {
       email,
       password,
     });
-    if (error) alert(error.message);
+
+    if (error) {
+      alert(error.message);
+      return;
+    }
+
+    // 🔥 THIS is what you were missing
+    navigate("/");
   };
 
   return (
@@ -29,11 +45,23 @@ export default function Login() {
       <div className="card">
         <h1>School Tracker</h1>
 
-        <input placeholder="Email" onChange={(e) => setEmail(e.target.value)} />
-        <input type="password" placeholder="Password" onChange={(e) => setPassword(e.target.value)} />
+        <input
+          placeholder="Email"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+        />
+
+        <input
+          type="password"
+          placeholder="Password"
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+        />
 
         <button onClick={signIn}>Login</button>
-        <button className="secondary" onClick={signUp}>Sign Up</button>
+        <button className="secondary" onClick={signUp}>
+          Sign Up
+        </button>
       </div>
     </div>
   );
