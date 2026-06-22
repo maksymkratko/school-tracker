@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import { supabase } from "../lib/supabase";
 import { useAuth } from "../context/AuthContext";
-import ClassCard from "../components/ClassCard";
 
 export default function Dashboard() {
   const { user } = useAuth();
@@ -41,8 +40,10 @@ export default function Dashboard() {
 
       <div className="grid">
         {classes.map((c) => (
-          <ClassCard key={c.id} classData={c} />
-        ))}
+  <div key={c.id} className="card">
+    <h3>{c.name}</h3>
+  </div>
+))}
       </div>
     </div>
   );
