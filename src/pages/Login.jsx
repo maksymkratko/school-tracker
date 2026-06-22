@@ -6,7 +6,13 @@ export default function Login() {
   const [password, setPassword] = useState("");
 
   const signUp = async () => {
-    await supabase.auth.signUp({ email, password });
+    await supabase.auth.signUp({
+  email,
+  password,
+  options: {
+    emailRedirectTo: window.location.origin
+  }
+});
     alert("Check your email to confirm!");
   };
 
